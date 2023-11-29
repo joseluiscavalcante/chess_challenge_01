@@ -1,0 +1,1 @@
+    stockfish_path = "C:\\Users\\usuario1\\Documents\\Cavalcante\\Projects\\chess_ia\\stockfish\\stockfish-windows-x86-64-modern.exe"
