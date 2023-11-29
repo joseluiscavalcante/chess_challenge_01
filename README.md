@@ -1,6 +1,6 @@
 # chess_challenge_01
 
-#Integrantes:
+# Integrantes:
  - João Gabriel Bento
  - José Luis Moreira Cavalcante
  - Matheus Barbosa do Carmo
