@@ -1,1 +1,5 @@
-    stockfish_path = "C:\\Users\\usuario1\\Documents\\Cavalcante\\Projects\\chess_ia\\stockfish\\stockfish-windows-x86-64-modern.exe"
+Cavalcante Path:
+stockfish_path = "C:\Users\jose_\OneDrive\Área de Trabalho\chess01\chess_challenge_01\stockfish\stockfish-windows-x86-64-modern.exe"
+
+Instalações necessárias:
+- pip install colorama

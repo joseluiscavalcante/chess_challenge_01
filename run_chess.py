@@ -1,6 +1,6 @@
-# main.py
 import chess
 from engine import ChessEngine
+from colorama import Fore, Style
 
 class ChessGame:
     def __init__(self):
@@ -18,8 +18,9 @@ class ChessGame:
                 move = chess.Move.from_uci(move_uci)
                 self.board.push(move)
             else:
+                print("\n Hum... Estou pensando...")
                 engine_move = self.engine.get_best_move(self.board)
-                print(f"\nStockfish plays: {engine_move.uci()}")
+                print(f"🤖 Essa é a melhor jogada, chefe!: {engine_move.uci()}")
                 self.board.push(engine_move)
 
         self.display_result()
@@ -27,50 +28,70 @@ class ChessGame:
 
     def ask_player_starts(self):
         while True:
-            choice = input("Do you want to play first? (yes/no): ").lower()
-            if choice == 'yes':
+            choice = input("Nosso oponente vai jogar primeiro? (S/N): ").lower()
+            if choice in 'Ss':
                 return True
-            elif choice == 'no':
+            elif choice in 'Nn':
                 return False
             else:
-                print("Invalid choice. Please enter 'yes' or 'no'.")
+                print("Escolha inválida. Por favor, escolha 'S' ou 'N'.")
 
     def display_board(self):
-        print("\n    a  b  c  d  e  f  g  h")
-        print("  +------------------------+")
+        print("\n", end="")
+        print(Fore.WHITE + "    a  b  c  d  e  f  g  h" + Style.RESET_ALL)
+        print(Fore.BLACK + "  +------------------------+" + Style.RESET_ALL)
         for i in range(8, 0, -1):
             row = f"{i} |"
             for j in range(1, 9):
-                piece = self.board.piece_at(chess.square(j - 1, i - 1))
+                square = chess.square(j - 1, i - 1)
+                piece = self.board.piece_at(square)
                 if piece:
-                    row += f" {piece.symbol()} "
+                    colored_piece = self.color_piece(piece)
+                    row += f" {colored_piece} "
                 else:
                     row += " . "
             print(row + f"| {i}")
-        print("  +------------------------+")
-        print("    a  b  c  d  e  f  g  h")
+        print(Fore.BLACK + "  +------------------------+" + Style.RESET_ALL)
+        print(Fore.WHITE + "    a  b  c  d  e  f  g  h" + Style.RESET_ALL)
+
+    def color_piece(self, piece):
+        if piece.color == chess.WHITE:
+            return Fore.WHITE + piece_to_emoji(piece) + Style.RESET_ALL
+        else:
+            return Fore.BLACK + piece_to_emoji(piece) + Style.RESET_ALL
 
     def get_player_move(self):
         legal_moves = [move.uci() for move in self.board.legal_moves]
         while True:
             try:
-                move_str = input("\nEnter your move (e.g., e2e4): ")
+                move_str = input("\nInsira a jogada do oponente (Ex.: e2e4): ")
                 if move_str in legal_moves:
                     return move_str
                 else:
-                    print("Invalid move. Please enter a legal move.")
+                    print("Movimento inválido. Por favor faça um movimento válido!")
             except:
-                print("Invalid move format. Please enter a move in UCI format.")
+                print("Formato de movimento inválido. Utilize o formato UCI.")
 
     def display_result(self):
         result = self.board.result()
-        print("\nGame Over")
+        print("\nFim de jogo!")
         if result == '1-0':
-            print("White wins!")
+            print("Brancas venceram!")
         elif result == '0-1':
-            print("Black wins!")
+            print("Pretas venceram!")
         else:
-            print("It's a draw!")
+            print("Deu empate!")
+
+def piece_to_emoji(piece):
+    piece_map = {
+        chess.PAWN: "♙" if piece.color == chess.WHITE else "♟",
+        chess.ROOK: "♖" if piece.color == chess.WHITE else "♜",
+        chess.KNIGHT: "♘" if piece.color == chess.WHITE else "♞",
+        chess.BISHOP: "♗" if piece.color == chess.WHITE else "♝",
+        chess.QUEEN: "♕" if piece.color == chess.WHITE else "♛",
+        chess.KING: "♔" if piece.color == chess.WHITE else "♚",
+    }
+    return piece_map.get(piece.piece_type, " ")
 
 if __name__ == "__main__":
     game = ChessGame()
