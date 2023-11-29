@@ -3,16 +3,19 @@ import chess
 import chess.engine
 
 class ChessEngine:
-    def __init__(self, stockfish_path="C:\\Users\\usuario1\\Documents\\Cavalcante\\Projects\\chess_ia\\stockfish\\stockfish-windows-x86-64-modern.exe"):
+    def __init__(self, 
+                 stockfish_path = "C:\\Users\\usuario1\\Documents\\Cavalcante\\Projects\\chess_ia\\stockfish\\stockfish-windows-x86-64-modern.exe"):
         self.stockfish_path = stockfish_path
         self.engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
         
-        # Configurar o Stockfish para a dificuldade máxima com limitação de força
-        self.engine.configure({"Skill Level": 20, "Threads": 4, "Hash": 1024, "UCI_LimitStrength": True, "UCI_Elo": 2000})
+        # Configurar o Stockfish para o nível mais avançado
+        self.engine.configure({"Skill Level": 20, "Threads": 4, "Hash": 4096, "Use NNUE": True,
+                               "Move Overhead": 30, "Slow Mover": 80, "UCI_LimitStrength": False, "UCI_Elo": 3000})
 
     def get_best_move(self, board):
-        result = self.engine.play(board, chess.engine.Limit(time=2.0))
+        result = self.engine.play(board, chess.engine.Limit(time=10.0))  # Aumentando o tempo limite para melhor análise
         return result.move
 
     def close(self):
         self.engine.quit()
+
