@@ -4,7 +4,7 @@ import chess.engine
 
 class ChessEngine:
     def __init__(self, 
-                 stockfish_path = "C:\\Users\\usuario1\\Documents\\Cavalcante\\Projects\\chess_ia\\stockfish\\stockfish-windows-x86-64-modern.exe"):
+                 stockfish_path = "C:\\Users\\jose_\\OneDrive\\Área de Trabalho\\chess01\\chess_challenge_01\\stockfish\\stockfish-windows-x86-64-modern.exe"):
         self.stockfish_path = stockfish_path
         self.engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
         
