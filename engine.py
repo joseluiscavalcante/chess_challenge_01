@@ -9,7 +9,7 @@ class ChessEngine:
         self.engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
         
         # Configurar o Stockfish para o nível mais avançado
-        self.engine.configure({"Skill Level": 20, "Threads": 4, "Hash": 4096, "Use NNUE": True,
+        self.engine.configure({"Skill Level": 20, "Threads": 8, "Hash": 6144, "Use NNUE": True,
                                "Move Overhead": 30, "Slow Mover": 80, "UCI_LimitStrength": False, "UCI_Elo": 3000})
 
     def get_best_move(self, board):
